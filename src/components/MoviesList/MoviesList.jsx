@@ -16,7 +16,7 @@ const MoviesList = ({ data }) => {
               return `movies/%${item.id}`;
             }
           };
-          linkForNavLink();
+          // linkForNavLink();
 
           return (
             <ItemStyled key={item.id}>

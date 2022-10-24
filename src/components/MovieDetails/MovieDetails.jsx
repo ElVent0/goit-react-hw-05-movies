@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 const MovieDetails = () => {
   const [movieData, setMovieData] = useState(null);
   const { movieId } = useParams();
-
+  console.log(movieId);
   useEffect(() => {
     try {
       const fetchData = async () => {

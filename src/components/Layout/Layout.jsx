@@ -12,7 +12,9 @@ const Layout = () => {
       <LayoutStyled>
         <ListStyled>
           <ItemStyled>
-            <LinkStyled to="/">Home</LinkStyled>
+            <LinkStyled to="/" end>
+              Home
+            </LinkStyled>
           </ItemStyled>
           <ItemStyled>
             <LinkStyled to="/movies">Movies</LinkStyled>
