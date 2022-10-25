@@ -9,20 +9,23 @@ const MoviesList = ({ data }) => {
     <ListStyled>
       {data &&
         data.map(item => {
-          const linkForNavLink = () => {
-            if (location.pathname === '/movies') {
-              return `%${item.id}}`;
-            } else if (location.pathname === '/') {
-              return `movies/%${item.id}`;
-            }
-          };
-          // linkForNavLink();
+          const linkForHome = `movies/${item.id}`;
+          const linkForMovies = `${item.id}`;
+          // console.log(item);
+          console.log(location.pathname);
 
           return (
             <ItemStyled key={item.id}>
-              <LinkStyled to={linkForNavLink()}>
-                {item.original_title}
-              </LinkStyled>
+              {location.pathname === '/' && (
+                <LinkStyled to={linkForHome} state={{ from: location }}>
+                  {item.original_title}
+                </LinkStyled>
+              )}
+              {location.pathname === '/movies' && (
+                <LinkStyled to={linkForMovies} state={{ from: location }}>
+                  {item.original_title}
+                </LinkStyled>
+              )}
             </ItemStyled>
           );
         })}
