@@ -15,9 +15,19 @@ const MovieDescription = ({ movieData }) => {
   const movieRating = Math.round(movieData.vote_average * 10);
   const location = useLocation();
 
+  console.log('location', location);
+
+  const clickOne = () => {
+    console.log('------------------', location.state?.from ?? '/');
+  };
+
   return (
     <>
-      <BackLink type="button" to={location.state?.from ?? '/'}>
+      <BackLink
+        type="button"
+        to={location.state?.from ?? '/'}
+        onClick={clickOne}
+      >
         Go back
       </BackLink>
 

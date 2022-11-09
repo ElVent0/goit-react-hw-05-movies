@@ -5,6 +5,7 @@ import {
   ItemStyled,
   LinkStyled,
 } from './Layout.styled';
+import { Suspense } from 'react';
 
 const Layout = () => {
   return (
@@ -21,7 +22,9 @@ const Layout = () => {
           </ItemStyled>
         </ListStyled>
       </LayoutStyled>
-      <Outlet />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Outlet />
+      </Suspense>
     </>
   );
 };

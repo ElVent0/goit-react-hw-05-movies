@@ -1,16 +1,16 @@
 import MoviesList from '../../components/MoviesList/MoviesList';
 import { useState, useEffect } from 'react';
-import { FormStyled, InputStyled, ButtonStyled } from './Movies.styled';
 import { ContainerStyled } from '../../components/ContainerStyled.styled';
 import { fetchedListByName } from '../../api/api';
-import { useSearchParams } from 'react-router-dom';
-import { Suspense } from 'react';
+import { useSearchParams, useLocation } from 'react-router-dom';
+import Form from '../../components/Form/Form';
 
 const Movies = () => {
   const [moviesArray, setMoviesArray] = useState(null);
   const [inputValue, setInputValue] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
   const name = searchParams.get('name');
+  const location = useLocation();
 
   const onChange = e => {
     const newValue = e.currentTarget.value;
@@ -20,11 +20,7 @@ const Movies = () => {
   const onSubmit = e => {
     e.preventDefault();
     try {
-      const fetchData = async () => {
-        const data = await fetchedListByName(inputValue);
-        setMoviesArray(data.results);
-      };
-      fetchData();
+      location.search = inputValue;
       setInputValue('');
       setSearchParams({ name: inputValue });
     } catch (e) {
@@ -47,15 +43,10 @@ const Movies = () => {
   }, [name]);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <ContainerStyled>
-        <FormStyled action="" onSubmit={onSubmit}>
-          <InputStyled type="text" value={inputValue} onChange={onChange} />
-          <ButtonStyled type="submit">Search</ButtonStyled>
-        </FormStyled>
-        <MoviesList data={moviesArray} />
-      </ContainerStyled>
-    </Suspense>
+    <ContainerStyled>
+      <Form onChange={onChange} onSubmit={onSubmit} inputValue={inputValue} />
+      <MoviesList data={moviesArray} />
+    </ContainerStyled>
   );
 };
 

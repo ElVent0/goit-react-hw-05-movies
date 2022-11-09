@@ -3,7 +3,6 @@ import { TilteStyled } from './Home.styled';
 import { ContainerStyled } from '../../components/ContainerStyled.styled';
 import { useState, useEffect } from 'react';
 import { fetchedList } from '../../api/api';
-import { Suspense } from 'react';
 
 const Home = () => {
   const [moviesArray, setMoviesArray] = useState(null);
@@ -23,12 +22,10 @@ const Home = () => {
 
   return (
     <>
-      <Suspense fallback={<div>Loading...</div>}>
-        <ContainerStyled>
-          <TilteStyled>Trending today</TilteStyled>
-          <MoviesList data={moviesArray} />
-        </ContainerStyled>
-      </Suspense>
+      <ContainerStyled>
+        <TilteStyled>Trending today</TilteStyled>
+        <MoviesList data={moviesArray} />
+      </ContainerStyled>
     </>
   );
 };

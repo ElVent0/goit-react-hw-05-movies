@@ -1,4 +1,4 @@
-import { Outlet, useParams } from 'react-router-dom';
+import { Outlet, useParams, useLocation } from 'react-router-dom';
 import { ContainerStyled } from '../../components/ContainerStyled.styled';
 import { fetchedListById } from '../../api/api';
 import { useState, useEffect } from 'react';
@@ -11,11 +11,11 @@ import {
   ItemStyled,
   LinkStyled,
 } from './MovieDetails.styled';
-import { Suspense } from 'react';
 
 const MovieDetails = () => {
   const [movieData, setMovieData] = useState(null);
   const { movieId } = useParams();
+  const location = useLocation();
   console.log('dofjgndfgnldfgm', movieId);
 
   useEffect(() => {
@@ -34,23 +34,28 @@ const MovieDetails = () => {
   }, [movieId]);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <ContainerStyled>
-        {movieData && <MovieDescription movieData={movieData} />}
-        <AdditionalContent>
-          <Paragraph>Additional information</Paragraph>
-          <ListStyled>
-            <ItemStyled>
-              <LinkStyled to="cast">Cast</LinkStyled>
-            </ItemStyled>
-            <ItemStyled>
-              <LinkStyled to="reviews">Reviews</LinkStyled>
-            </ItemStyled>
-          </ListStyled>
-        </AdditionalContent>
-        <Outlet context={movieId} />
-      </ContainerStyled>
-    </Suspense>
+    <ContainerStyled>
+      {movieData && <MovieDescription movieData={movieData} />}
+      <AdditionalContent>
+        <Paragraph>Additional information</Paragraph>
+        <ListStyled>
+          <ItemStyled>
+            <LinkStyled to="cast" state={{ from: location.state?.from ?? '/' }}>
+              Cast
+            </LinkStyled>
+          </ItemStyled>
+          <ItemStyled>
+            <LinkStyled
+              to="reviews"
+              state={{ from: location.state?.from ?? '/' }}
+            >
+              Reviews
+            </LinkStyled>
+          </ItemStyled>
+        </ListStyled>
+      </AdditionalContent>
+      <Outlet context={movieId} />
+    </ContainerStyled>
   );
 };
 
